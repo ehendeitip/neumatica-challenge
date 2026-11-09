@@ -26,8 +26,12 @@
         <div class="teacher-header"><div><p class="eyebrow">Panel del docente</p><h2>Resultados de neumática</h2></div><button id="backToLoginBtn" class="secondary-btn">Volver</button></div>
         <div class="teacher-card card">
           <div class="teacher-lock">
-            <p class="note">Los resultados disponibles en este navegador se muestran al pulsar el botón.</p>
-            <button id="openTeacherResultsBtn" class="primary-btn">Ver resultados</button>
+            <p class="note">Ingresa la clave docente para consultar los resultados.</p>
+            <div class="input-group">
+              <label for="teacherCode">Clave docente</label>
+              <input id="teacherCode" type="password" autocomplete="current-password" placeholder="Escribe la clave docente" />
+            </div>
+            <button id="openTeacherResultsBtn" class="primary-btn">Ingresar y ver resultados</button>
           </div>
           <div id="teacherResultsPanel" class="teacher-results hidden">
             <div class="teacher-summary">
