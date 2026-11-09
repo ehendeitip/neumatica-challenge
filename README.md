@@ -1,10 +1,10 @@
 # Neumática ITIP
 
-Actividad interactiva para estudiantes de grado 7° del Colegio ITIP.
+Actividad interactiva para estudiantes de grado 9° del Colegio ITIP.
 
 ## Qué incluye
 - Login del estudiante con nombre y código de clase
-- Validación de códigos: `ITIP7A`, `ITIP7B`, `ITIP7C`
+- Validación de códigos: `ITIP9A`, `ITIP9B`, `ITIP9C`
 - Simulador de neumática embebido desde Picuino
 - Preguntas relacionadas con sistemas neumáticos
 - Puntaje automático por respuestas correctas
@@ -23,7 +23,7 @@ Actividad interactiva para estudiantes de grado 7° del Colegio ITIP.
 - `app.js`
 
 ## Vista de la actividad
-La página incluye un iframe con el simulador de Pneumática de Picuino:
+La página incluye un iframe con el simulador de neumática de Picuino:
 https://www.picuino.com/neumatic/index.html#
 
 ## Nota

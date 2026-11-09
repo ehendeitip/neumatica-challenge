@@ -1,4 +1,4 @@
-const VALID_CODES = ["ITIP7A", "ITIP7B", "ITIP7C"];
+const VALID_CODES = ["ITIP9A", "ITIP9B", "ITIP9C"];
 
 const questions = [
   {
@@ -55,7 +55,7 @@ const questions = [
 
 const state = {
   student: "",
-  grade: "7",
+  grade: "9",
   classCode: "",
   score: 0,
   currentIndex: 0,
@@ -100,10 +100,10 @@ function restoreSession() {
     const parsed = JSON.parse(session);
     if (parsed.student && parsed.classCode) {
       state.student = parsed.student;
-      state.grade = parsed.grade || "7";
+      state.grade = "9";
       state.classCode = parsed.classCode;
       state.score = parsed.score || 0;
-      studentLabel.textContent = `${state.student} · ${state.grade}° · ${state.classCode}`;
+      studentLabel.textContent = `${state.student} · 9° · ${state.classCode}`;
       showScreen("game");
       scoreValue.textContent = String(state.score);
       renderQuestion();
@@ -197,7 +197,7 @@ function validateLogin() {
   }
 
   if (!VALID_CODES.includes(classCode)) {
-    alert("Código de clase no válido. Prueba: ITIP7A, ITIP7B o ITIP7C.");
+    alert("Código de clase no válido. Prueba: ITIP9A, ITIP9B o ITIP9C.");
     return;
   }
 
