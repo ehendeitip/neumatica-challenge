@@ -11,144 +11,54 @@
     <div class="container">
       <section id="loginScreen" class="screen active">
         <div class="card login-box">
-          <div class="brand">
-            <span class="badge">ITIP</span>
-            <h1>Laboratorio de Neumática</h1>
-          </div>
+          <div class="brand"><span class="badge">ITIP</span><h1>Laboratorio de Neumática</h1></div>
           <p class="subtitle">Grado 9° · Colegio ITIP</p>
-
-          <div class="input-group">
-            <label for="studentName">Nombre del estudiante</label>
-            <input id="studentName" type="text" autocomplete="name" placeholder="Ej: Ana Gómez" />
-          </div>
-          <div class="input-group">
-            <label for="grade">Grado</label>
-            <select id="grade"><option value="9">Noveno</option></select>
-          </div>
-          <div class="input-group">
-            <label for="classCode">Código de clase</label>
-            <input id="classCode" type="text" placeholder="Ej: ITIP9A" />
-          </div>
-
+          <div class="input-group"><label for="studentName">Nombre del estudiante</label><input id="studentName" type="text" autocomplete="name" placeholder="Ej: Ana Gómez" /></div>
+          <div class="input-group"><label for="grade">Grado</label><select id="grade"><option value="9">Noveno</option></select></div>
+          <div class="input-group"><label for="classCode">Código de clase</label><input id="classCode" type="text" placeholder="Ej: ITIP9A" /></div>
           <button id="loginBtn" class="primary-btn">Ingresar a la actividad</button>
           <div class="note">Códigos de clase: <strong>ITIP9A</strong>, <strong>ITIP9B</strong> o <strong>ITIP9C</strong>.</div>
-
           <button id="teacherBtn" class="secondary-btn teacher-btn">Modo docente</button>
         </div>
       </section>
 
       <section id="teacherScreen" class="screen">
-        <div class="teacher-header">
-          <div>
-            <p class="eyebrow">Panel del docente</p>
-            <h2>Resultados de neumática</h2>
-          </div>
-          <button id="backToLoginBtn" class="secondary-btn">Volver</button>
-        </div>
-
+        <div class="teacher-header"><div><p class="eyebrow">Panel del docente</p><h2>Resultados de neumática</h2></div><button id="backToLoginBtn" class="secondary-btn">Volver</button></div>
         <div class="teacher-card card">
-          <div class="teacher-lock">
-            <label for="teacherCode">Clave docente</label>
-            <div class="teacher-form">
-              <input id="teacherCode" type="password" placeholder="Ingrese clave" />
-              <button id="openTeacherResultsBtn" class="primary-btn">Entrar</button>
-            </div>
-          </div>
-
+          <div class="teacher-lock"><label for="teacherCode">Clave docente</label><div class="teacher-form"><input id="teacherCode" type="password" placeholder="Ingrese clave" /><button id="openTeacherResultsBtn" class="primary-btn">Entrar</button></div></div>
           <div id="teacherResultsPanel" class="teacher-results hidden">
             <div class="teacher-summary">
-              <div class="stat-box">
-                <span>Estudiantes</span>
-                <strong id="totalStudents">0</strong>
-              </div>
-              <div class="stat-box">
-                <span>Promedio</span>
-                <strong id="averageScore">0</strong>
-              </div>
-              <div class="stat-box">
-                <span>Máximo</span>
-                <strong id="maxScore">0</strong>
-              </div>
+              <div class="stat-box"><span>Intentos registrados</span><strong id="totalStudents">0</strong></div>
+              <div class="stat-box"><span>Promedio</span><strong id="averageScore">0</strong></div>
+              <div class="stat-box"><span>Máximo</span><strong id="maxScore">0</strong></div>
             </div>
-
-            <div class="teacher-actions">
-              <button id="exportCsvBtn" class="primary-btn">Exportar CSV</button>
-              <button id="clearResultsBtn" class="danger-btn">Borrar resultados</button>
-            </div>
-
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Estudiante</th>
-                    <th>Código</th>
-                    <th>Puntaje</th>
-                    <th>Fecha</th>
-                  </tr>
-                </thead>
-                <tbody id="resultsTableBody"></tbody>
-              </table>
-            </div>
+            <div class="teacher-actions"><button id="exportCsvBtn" class="primary-btn">Exportar CSV</button><button id="clearResultsBtn" class="danger-btn">Borrar resultados</button></div>
+            <div class="table-wrap"><table><thead><tr><th>Estudiante</th><th>Código</th><th>Puntaje</th><th>Fecha</th></tr></thead><tbody id="resultsTableBody"></tbody></table></div>
+            <p class="note">Los resultados se guardan solo en este navegador. Para reunir los resultados de todos los estudiantes se necesita una base de datos compartida.</p>
           </div>
         </div>
       </section>
 
       <section id="gameScreen" class="screen">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">Actividad práctica guiada</p>
-            <h2>Explora, prueba y explica</h2>
-          </div>
-          <div class="session-box" id="studentLabel">Estudiante</div>
-          <button id="logoutBtn" class="secondary-btn">Cerrar sesión</button>
-        </header>
-
+        <header class="topbar"><div><p class="eyebrow">Actividad práctica guiada</p><h2>Explora, construye y explica</h2></div><div class="session-box" id="studentLabel">Estudiante</div><button id="logoutBtn" class="secondary-btn">Cerrar sesión</button></header>
         <main class="layout">
           <section class="card simulator-panel" aria-label="Simulador y guía de exploración">
-            <div class="simulator-heading">
-              <div>
-                <h3>1. Experimenta en el simulador</h3>
-                <p>Realiza la acción del reto y observa el circuito antes de responder.</p>
-              </div>
-              <a class="open-simulator" href="https://www.picuino.com/neumatic/index.html#" target="_blank" rel="noopener noreferrer">Abrir en otra pestaña ↗</a>
-            </div>
-            <div class="simulator-wrap">
-              <iframe
-                src="https://www.picuino.com/neumatic/index.html#"
-                title="Simulador de neumática Picuino"
-                loading="lazy"
-                allowfullscreen
-              ></iframe>
-            </div>
-            <p class="simulator-note">Puedes dejar esta actividad abierta en una pestaña y el simulador en otra. La actividad no puede leer automáticamente las acciones dentro de Picuino; tú confirmas que realizaste cada prueba y respondes según lo que observaste.</p>
+            <div class="simulator-heading"><div><h3>1. Experimenta en el simulador</h3><p>Realiza la acción del reto y observa o construye el circuito indicado.</p></div><a class="open-simulator" href="https://www.picuino.com/neumatic/index.html#" target="_blank" rel="noopener noreferrer">Abrir en otra pestaña ↗</a></div>
+            <div class="simulator-wrap"><iframe src="https://www.picuino.com/neumatic/index.html#" title="Simulador de neumática Picuino" loading="lazy" allowfullscreen></iframe></div>
+            <p class="simulator-note">Picuino es un simulador externo: esta actividad no puede verificar automáticamente el circuito que montas. Sigue la consigna, comprueba los elementos y conexiones, y registra tu resultado. Si el simulador no cabe en la pantalla, ábrelo en otra pestaña.</p>
           </section>
-
           <aside class="challenge-panel">
-            <div class="score-box">
-              <div>
-                <span class="label">Puntaje</span>
-                <div id="scoreValue" class="score-number">0</div>
-              </div>
-              <span id="progressLabel" class="progress-label">Reto 1 de 5</span>
-            </div>
-
+            <div class="score-box"><div><span class="label">Puntaje</span><div id="scoreValue" class="score-number">0</div></div><span id="progressLabel" class="progress-label">Reto 1</span></div>
             <section class="mission-card" aria-live="polite">
-              <p id="missionNumber" class="mission-number">RETO 1</p>
-              <h3 id="missionTitle"></h3>
-              <p class="instruction-label">Prueba en el simulador</p>
-              <p id="missionAction" class="mission-action"></p>
+              <p id="missionNumber" class="mission-number">RETO 1</p><h3 id="missionTitle"></h3>
+              <p class="instruction-label">Consigna en Picuino</p><p id="missionAction" class="mission-action"></p>
+              <div id="missionVisual" class="mission-visual hidden"><p class="visual-label">Diagrama de referencia</p><img id="missionImage" alt="Diagrama de referencia del circuito neumático" /><p id="imageCaption" class="image-caption"></p></div>
+              <div id="taskChecklist" class="task-checklist hidden"></div>
               <button id="doneBtn" class="primary-btn">Ya realicé la prueba</button>
-              <p id="questionText" class="question-text hidden"></p>
-              <div id="optionList" class="option-list hidden"></div>
-              <p id="answerFeedback" class="answer-feedback" aria-live="polite"></p>
-              <button id="nextBtn" class="warning-btn hidden">Siguiente reto</button>
+              <p id="questionText" class="question-text hidden"></p><div id="optionList" class="option-list hidden"></div>
+              <p id="answerFeedback" class="answer-feedback" aria-live="polite"></p><button id="nextBtn" class="warning-btn hidden">Siguiente reto</button>
             </section>
-
-            <section id="resultsBox" class="results-box hidden">
-              <h3>Resultado final</h3>
-              <p id="resultMessage"></p>
-              <button id="restartBtn" class="primary-btn">Repetir actividad</button>
-            </section>
+            <section id="resultsBox" class="results-box hidden"><h3>Resultado final</h3><p id="resultMessage"></p><button id="restartBtn" class="primary-btn">Repetir actividad</button></section>
           </aside>
         </main>
       </section>

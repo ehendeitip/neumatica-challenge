@@ -1,27 +1,24 @@
 # Neumática ITIP
 
-Actividad interactiva guiada para estudiantes de grado 9° del Colegio ITIP.
+Actividad práctica guiada para grado 9° del Colegio ITIP.
 
-## Qué incluye
-- Ingreso con nombre y código de clase (`ITIP9A`, `ITIP9B`, `ITIP9C`).
-- Simulador de neumática de Picuino integrado y enlace para abrirlo en otra pestaña.
-- Cinco retos prácticos: el estudiante realiza una prueba en el simulador, confirma que la hizo y responde una pregunta sobre la observación o el circuito.
-- Puntaje de hasta 50 puntos y explicaciones para las respuestas.
-- Progreso básico guardado en el navegador mediante `localStorage`.
-- Modo docente con clave `DOCENTE9`, que permite ver resultados y exportarlos en CSV.
+## Contenido
+- Acceso de estudiante con código de clase: `ITIP9A`, `ITIP9B` o `ITIP9C`.
+- Cinco preguntas de observación sobre el simulador Picuino.
+- Dos retos de montaje de sistemas de control en lazo cerrado, con lista de criterios de autoevaluación.
+- Un reto para replicar un circuito a partir de un diagrama de referencia incluido en `images/circuito-referencia.svg`.
+- Puntaje automático de hasta 95 puntos; cada reto práctico concede puntaje parcial por los criterios marcados.
+- Panel docente (`DOCENTE9`), vista de resultados y exportación CSV.
 
-## Cómo usarlo
-1. Abre la app en GitHub Pages.
+## Uso
+1. Abre la actividad publicada en GitHub Pages.
 2. Ingresa nombre y código de clase.
-3. Realiza la acción indicada en el simulador de Picuino.
-4. Pulsa **Ya realicé la prueba** y contesta según lo que observaste.
-5. Continúa hasta ver el puntaje final.
-6. Para ver resultados del docente: En la pantalla de ingreso, usa **Modo docente** y escribe la clave `DOCENTE9`.
+3. En los retos de montaje, construye y prueba el sistema en Picuino; después marca únicamente los criterios que verificaste.
+4. En el reto de réplica, sigue el diagrama de referencia, construye el circuito equivalente y pruébalo.
+5. En modo docente, los resultados se consultan en el mismo navegador desde el que se guardaron y se pueden exportar como CSV.
 
-## Límite de integración
-Picuino se carga desde otro dominio y esta página no puede detectar directamente las acciones realizadas dentro de su simulador. Por eso, el estudiante confirma cada prueba y responde preguntas vinculadas con la acción y la observación; las respuestas y el puntaje sí se procesan aquí. Los puntajes guardados en `localStorage` solo quedan en ese navegador/dispositivo; no se envían automáticamente al docente.
+## Cambiar por una imagen de referencia del docente
+El reto de réplica usa ahora un diagrama de ejemplo. Para utilizar una imagen particular, añade el archivo al repositorio (por ejemplo, `images/referencia-clase.png`) y cambia la propiedad `image` del reto de tipo `replica` en `app.js` por esa ruta. También se puede reemplazar el SVG incluido.
 
-## Archivos
-- `index.html`
-- `styles.css`
-- `app.js`
+## Límites
+La actividad no puede inspeccionar directamente las acciones de Picuino porque el simulador se carga desde otro dominio. Los retos de montaje se evalúan mediante una lista de verificación que marca el estudiante; no es una verificación automática del circuito. Los resultados se almacenan en `localStorage` del dispositivo y navegador actuales, no se sincronizan entre equipos.

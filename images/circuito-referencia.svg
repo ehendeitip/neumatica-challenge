@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-labelledby="title desc">
+  <title id="title">Circuito neumático de referencia</title>
+  <desc id="desc">Fuente de aire conectada a una válvula distribuidora 5/2 y un cilindro de doble efecto accionado manualmente.</desc>
+  <rect width="900" height="440" rx="24" fill="#f8fafc"/>
+  <text x="450" y="42" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#0f172a">Circuito de referencia: válvula 5/2 y cilindro de doble efecto</text>
+  <g stroke="#2563eb" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 275 H285 V180 H360"/><path d="M555 180 H640 V130 H735"/><path d="M555 225 H640 V270 H735"/>
+    <path d="M420 300 V365 H505 V300"/>
+  </g>
+  <g stroke="#0f172a" stroke-width="4" fill="none">
+    <path d="M285 180 V300"/><rect x="360" y="145" width="95" height="100"/><rect x="455" y="145" width="100" height="100"/>
+    <path d="M380 220 L435 165 M435 220 L380 165 M475 165 L530 220 M475 220 L530 165"/>
+    <path d="M360 195 H335 M555 195 H585"/><path d="M585 195 L570 185 M585 195 L570 205"/>
+    <path d="M555 180 H640 M555 225 H640"/><path d="M640 130 V100 M640 270 V300"/>
+    <path d="M420 300 V365 M505 300 V365"/>
+  </g>
+  <g fill="#0f172a" font-family="Arial" font-size="18" font-weight="700">
+    <text x="80" y="250">Alimentación</text><text x="398" y="275">Válvula 5/2</text><text x="730" y="115">Cámara A</text><text x="730" y="325">Cámara B</text><text x="390" y="400">Escape</text>
+  </g>
+  <g stroke="#0f172a" stroke-width="5" fill="#e2e8f0">
+    <rect x="735" y="145" width="100" height="110" rx="5"/><path d="M835 200 H865"/><path d="M865 200 V160"/>
+  </g>
+  <text x="785" y="285" text-anchor="middle" font-family="Arial" font-size="17" font-weight="700" fill="#0f172a">Cilindro</text>
+  <g stroke="#0f172a" stroke-width="4" fill="none"><circle cx="300" cy="180" r="15"/><path d="M300 165 V145 M288 145 H312"/></g>
+  <text x="220" y="125" font-family="Arial" font-size="16" fill="#0f172a">Mando manual</text>
+  <text x="450" y="430" text-anchor="middle" font-family="Arial" font-size="14" fill="#475569">Identifica, monta y prueba los elementos equivalentes en el simulador.</text>
+</svg>
