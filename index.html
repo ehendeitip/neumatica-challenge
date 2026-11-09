@@ -25,7 +25,10 @@
       <section id="teacherScreen" class="screen">
         <div class="teacher-header"><div><p class="eyebrow">Panel del docente</p><h2>Resultados de neumática</h2></div><button id="backToLoginBtn" class="secondary-btn">Volver</button></div>
         <div class="teacher-card card">
-          <div class="teacher-lock"><label for="teacherCode">Clave docente</label><div class="teacher-form"><input id="teacherCode" type="password" placeholder="Ingrese clave" /><button id="openTeacherResultsBtn" class="primary-btn">Entrar</button></div></div>
+          <div class="teacher-lock">
+            <p class="note">Los resultados disponibles en este navegador se muestran al pulsar el botón.</p>
+            <button id="openTeacherResultsBtn" class="primary-btn">Ver resultados</button>
+          </div>
           <div id="teacherResultsPanel" class="teacher-results hidden">
             <div class="teacher-summary">
               <div class="stat-box"><span>Intentos registrados</span><strong id="totalStudents">0</strong></div>
@@ -34,7 +37,7 @@
             </div>
             <div class="teacher-actions"><button id="exportCsvBtn" class="primary-btn">Exportar CSV</button><button id="clearResultsBtn" class="danger-btn">Borrar resultados</button></div>
             <div class="table-wrap"><table><thead><tr><th>Estudiante</th><th>Código</th><th>Puntaje</th><th>Fecha</th></tr></thead><tbody id="resultsTableBody"></tbody></table></div>
-            <p class="note">Los resultados se guardan solo en este navegador. Para reunir los resultados de todos los estudiantes se necesita una base de datos compartida.</p>
+            <p class="note">Los resultados se guardan solo en este navegador. Para reunir resultados de otros dispositivos se necesita una base de datos compartida.</p>
           </div>
         </div>
       </section>
