@@ -1,34 +1,25 @@
 # Neumática ITIP
 
-Actividad interactiva para estudiantes de grado 9° del Colegio ITIP.
+Actividad interactiva guiada para estudiantes de grado 9° del Colegio ITIP.
 
 ## Qué incluye
-- Login del estudiante con nombre y código de clase
-- Validación de códigos: `ITIP9A`, `ITIP9B`, `ITIP9C`
-- Simulador de neumática embebido desde Picuino
-- Preguntas relacionadas con sistemas neumáticos
-- Puntaje automático por respuestas correctas
-- Pantalla final con resultado
-- Persistencia básica en `localStorage`
+- Ingreso con nombre y código de clase (`ITIP9A`, `ITIP9B`, `ITIP9C`).
+- Simulador de neumática de Picuino integrado y enlace para abrirlo en otra pestaña.
+- Cinco retos prácticos: el estudiante realiza una prueba en el simulador, confirma que la hizo y responde una pregunta sobre la observación o el circuito.
+- Puntaje de hasta 50 puntos y explicaciones para las respuestas.
+- Progreso básico guardado en el navegador mediante `localStorage`.
 
 ## Cómo usarlo
-1. Abre `index.html` en el navegador.
-2. Ingresa el nombre del estudiante.
-3. Escribe un código de clase válido.
-4. Responde las preguntas y observa el puntaje.
+1. Abre `https://ehendeitip.github.io/neumatica-challenge/`.
+2. Ingresa nombre y código de clase.
+3. Realiza la acción indicada en el simulador de Picuino.
+4. Pulsa **Ya realicé la prueba** y contesta según lo que observaste.
+5. Continúa hasta ver el puntaje final.
 
-## Archivos principales
+## Límite de integración
+Picuino se carga desde otro dominio y esta página no puede detectar directamente las acciones realizadas dentro de su simulador. Por eso, el estudiante confirma cada prueba y responde preguntas vinculadas con la acción y la observación; las respuestas y el puntaje sí se procesan aquí. Los puntajes guardados en `localStorage` solo quedan en ese navegador/dispositivo; no se envían automáticamente al docente.
+
+## Archivos
 - `index.html`
 - `styles.css`
 - `app.js`
-
-## Vista de la actividad
-La página incluye un iframe con el simulador de neumática de Picuino:
-https://www.picuino.com/neumatic/index.html#
-
-## Nota
-La actividad está pensada para uso escolar y puede adaptarse más adelante a:
-- almacenamiento de resultados en Firebase
-- login docente
-- base de datos por curso
-- reportes por estudiante

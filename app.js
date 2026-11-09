@@ -1,55 +1,47 @@
 const VALID_CODES = ["ITIP9A", "ITIP9B", "ITIP9C"];
+const SESSION_KEY = "neumatica_itip_grade9_v2";
 
-const questions = [
+// Cada reto pide observar una acción real en Picuino antes de responder.
+const missions = [
   {
-    question: "¿Qué elemento se usa para controlar la dirección del flujo de aire en un circuito neumático?",
-    options: [
-      "Compresor",
-      "Válvula direccional",
-      "Cilindro",
-      "Manguera"
-    ],
-    correct: 1
+    title: "Activa un mando y observa el actuador",
+    action: "En el simulador, abre un circuito de ejemplo que tenga un mando manual y un cilindro. Acciona el mando y observa el vástago del cilindro.",
+    question: "Al accionar el mando del circuito, ¿qué observaste en el cilindro?",
+    options: ["El vástago se desplazó", "El cilindro produjo electricidad", "El aire se convirtió en líquido", "El circuito dejó de tener conexiones"],
+    correct: 0,
+    feedback: "El mando cambia el estado del circuito y el aire comprimido puede mover el actuador."
   },
   {
-    question: "¿Qué ocurre cuando un cilindro neumático se extiende?",
-    options: [
-      "Se mueve el pistón por presión del aire",
-      "Se apaga el compresor",
-      "Se corta la electricidad",
-      "Se vacía el depósito"
-    ],
-    correct: 0
+    title: "Encuentra quién dirige el aire",
+    action: "En el esquema del simulador, sigue las conexiones entre la alimentación y el cilindro. Acciona el mando y observa qué componente cambia la ruta del aire.",
+    question: "¿Qué componente dirige el aire hacia las distintas conexiones del circuito?",
+    options: ["La válvula distribuidora o direccional", "El silenciador", "El manómetro", "El soporte del dibujo"],
+    correct: 0,
+    feedback: "La válvula distribuidora cambia las conexiones por las que circula el aire."
   },
   {
-    question: "¿Cuál de estas funciones es más propia de una válvula 5/2?",
-    options: [
-      "Controlar la temperatura",
-      "Cambiar la dirección del aire a dos posiciones",
-      "Aumentar la presión del aire",
-      "Generar electricidad"
-    ],
-    correct: 1
+    title: "Sigue el recorrido del aire",
+    action: "Observa las líneas del circuito en Picuino. Empieza en la fuente de aire y sigue el recorrido hasta el elemento que se mueve.",
+    question: "¿Cuál es el recorrido funcional básico que observaste?",
+    options: ["Alimentación de aire → válvula → cilindro", "Cilindro → manómetro → alimentación", "Mando → pantalla → cilindro", "Silenciador → estudiante → válvula"],
+    correct: 0,
+    feedback: "La alimentación aporta aire, la válvula lo dirige y el cilindro transforma esa energía en movimiento."
   },
   {
-    question: "Si el circuito tiene un compresor, una válvula y un cilindro, ¿qué permite el movimiento final?",
-    options: [
-      "La presión del aire",
-      "La luz del aula",
-      "La presencia de agua",
-      "La velocidad del mouse"
-    ],
-    correct: 0
+    title: "Compara las posiciones del cilindro",
+    action: "Acciona y libera el mando del circuito de ejemplo. Observa si el cilindro avanza, retrocede o permanece en su posición. Fíjate en las conexiones de la válvula.",
+    question: "¿Qué debes observar para explicar el avance o el retorno del cilindro?",
+    options: ["Qué conexiones de la válvula reciben aire y cuáles descargan", "El color del fondo de la página", "El tamaño de la ventana del navegador", "La posición del cursor"],
+    correct: 0,
+    feedback: "El movimiento depende de cómo la válvula conecta la presión y el escape con el actuador."
   },
   {
-    question: "¿Qué representa la señal de entrada al sistema neumático?",
-    options: [
-      "El botón o pulsador que activa la función",
-      "La rueda del ratón",
-      "El teclado numérico",
-      "La pantalla del navegador"
-    ],
-    correct: 0
+    title: "Diagnostica un cilindro que no se mueve",
+    action: "Vuelve a accionar el circuito. Revisa visualmente la fuente de aire, las conexiones y la posición del mando o de la válvula antes de decidir qué podría estar fallando.",
+    question: "Si el cilindro no se mueve al accionar el mando, ¿qué conviene comprobar primero en el esquema?",
+    options: ["La alimentación de aire, las conexiones y el estado de la válvula", "Cambiar el color de la página", "Cerrar la pestaña del simulador", "Aumentar el volumen del computador"],
+    correct: 0,
+    feedback: "Un diagnóstico inicial revisa que haya alimentación y que el aire pueda pasar por las conexiones y la válvula."
   }
 ];
 
@@ -59,6 +51,7 @@ const state = {
   classCode: "",
   score: 0,
   currentIndex: 0,
+  confirmed: false,
   answered: false,
   finished: false
 };
@@ -70,155 +63,180 @@ const classCodeInput = document.getElementById("classCode");
 const gradeSelect = document.getElementById("grade");
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
+const doneBtn = document.getElementById("doneBtn");
 const nextBtn = document.getElementById("nextBtn");
 const restartBtn = document.getElementById("restartBtn");
 const studentLabel = document.getElementById("studentLabel");
 const scoreValue = document.getElementById("scoreValue");
-const questionTitle = document.getElementById("questionTitle");
+const progressLabel = document.getElementById("progressLabel");
+const missionNumber = document.getElementById("missionNumber");
+const missionTitle = document.getElementById("missionTitle");
+const missionAction = document.getElementById("missionAction");
 const questionText = document.getElementById("questionText");
 const optionList = document.getElementById("optionList");
+const answerFeedback = document.getElementById("answerFeedback");
 const resultsBox = document.getElementById("resultsBox");
 const resultMessage = document.getElementById("resultMessage");
 
+function showScreen(name) {
+  loginScreen.classList.toggle("active", name === "login");
+  gameScreen.classList.toggle("active", name === "game");
+}
+
 function saveSession() {
-  localStorage.setItem(
-    "neumatica_itip_session",
-    JSON.stringify({
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({
       student: state.student,
       grade: state.grade,
       classCode: state.classCode,
-      score: state.score
-    })
-  );
+      score: state.score,
+      currentIndex: state.currentIndex,
+      finished: state.finished
+    }));
+  } catch (error) {
+    console.warn("No se pudo guardar la sesión en este navegador.", error);
+  }
 }
 
 function restoreSession() {
-  const session = localStorage.getItem("neumatica_itip_session");
-  if (!session) return;
-
   try {
-    const parsed = JSON.parse(session);
-    if (parsed.student && parsed.classCode) {
-      state.student = parsed.student;
-      state.grade = "9";
-      state.classCode = parsed.classCode;
-      state.score = parsed.score || 0;
-      studentLabel.textContent = `${state.student} · 9° · ${state.classCode}`;
-      showScreen("game");
-      scoreValue.textContent = String(state.score);
-      renderQuestion();
-    }
+    const saved = JSON.parse(localStorage.getItem(SESSION_KEY) || "null");
+    if (!saved || !saved.student || !VALID_CODES.includes(saved.classCode)) return;
+
+    state.student = saved.student;
+    state.grade = "9";
+    state.classCode = saved.classCode;
+    state.score = Number(saved.score) || 0;
+    state.currentIndex = Math.min(Number(saved.currentIndex) || 0, missions.length - 1);
+    state.finished = Boolean(saved.finished);
+    studentLabel.textContent = `${state.student} · 9° · ${state.classCode}`;
+    scoreValue.textContent = String(state.score);
+    showScreen("game");
+    if (state.finished) showResults();
+    else renderMission();
   } catch (error) {
     console.warn("No se pudo restaurar la sesión.", error);
   }
 }
 
-function showScreen(screenName) {
-  loginScreen.classList.toggle("active", screenName === "login");
-  gameScreen.classList.toggle("active", screenName === "game");
-}
-
-function updateScore() {
-  scoreValue.textContent = String(state.score);
-}
-
-function renderQuestion() {
-  if (state.currentIndex >= questions.length) {
-    finishActivity();
-    return;
-  }
-
-  const q = questions[state.currentIndex];
-  questionTitle.textContent = `Pregunta ${state.currentIndex + 1}`;
-  questionText.textContent = q.question;
-  optionList.innerHTML = "";
+function renderMission() {
+  const mission = missions[state.currentIndex];
+  state.confirmed = false;
   state.answered = false;
+  progressLabel.textContent = `Reto ${state.currentIndex + 1} de ${missions.length}`;
+  missionNumber.textContent = `RETO ${state.currentIndex + 1}`;
+  missionTitle.textContent = mission.title;
+  missionAction.textContent = mission.action;
+  questionText.textContent = mission.question;
+  questionText.classList.add("hidden");
+  optionList.innerHTML = "";
+  optionList.classList.add("hidden");
+  answerFeedback.textContent = "";
+  answerFeedback.className = "answer-feedback";
+  doneBtn.classList.remove("hidden");
+  doneBtn.disabled = false;
+  nextBtn.classList.add("hidden");
+  resultsBox.classList.add("hidden");
 
-  q.options.forEach((option, index) => {
+  mission.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "option";
     button.textContent = option;
-
-    button.addEventListener("click", () => {
-      if (state.answered) return;
-      state.answered = true;
-
-      const isCorrect = index === q.correct;
-      if (isCorrect) {
-        state.score += 10;
-        updateScore();
-        saveSession();
-      }
-
-      Array.from(optionList.children).forEach((item, i) => {
-        item.classList.remove("selected");
-        if (i === q.correct) item.classList.add("correct");
-        if (i === index && i !== q.correct) item.classList.add("incorrect");
-      });
-
-      button.classList.add("selected");
-
-      setTimeout(() => {
-        if (state.currentIndex < questions.length - 1) {
-          state.currentIndex += 1;
-          renderQuestion();
-        } else {
-          finishActivity();
-        }
-      }, 800);
-    });
-
+    button.disabled = true;
+    button.addEventListener("click", () => answerMission(index, mission));
     optionList.appendChild(button);
   });
 }
 
-function finishActivity() {
+function confirmExperiment() {
+  if (state.confirmed || state.answered) return;
+  state.confirmed = true;
+  doneBtn.classList.add("hidden");
+  questionText.classList.remove("hidden");
+  optionList.classList.remove("hidden");
+  Array.from(optionList.children).forEach(button => { button.disabled = false; });
+}
+
+function answerMission(selectedIndex, mission) {
+  if (state.answered) return;
+  state.answered = true;
+  const correct = selectedIndex === mission.correct;
+  if (correct) state.score += 10;
+  scoreValue.textContent = String(state.score);
+
+  Array.from(optionList.children).forEach((button, index) => {
+    button.disabled = true;
+    if (index === mission.correct) button.classList.add("correct");
+    else if (index === selectedIndex) button.classList.add("incorrect");
+  });
+
+  answerFeedback.textContent = correct
+    ? `¡Correcto! ${mission.feedback}`
+    : `Observa de nuevo el circuito: ${mission.feedback}`;
+  answerFeedback.classList.add(correct ? "success-feedback" : "retry-feedback");
+  nextBtn.textContent = state.currentIndex === missions.length - 1 ? "Ver resultado" : "Siguiente reto";
+  nextBtn.classList.remove("hidden");
+  saveSession();
+}
+
+function showResults() {
   state.finished = true;
-  resultsBox.classList.add("visible");
-
-  const message =
-    state.score >= 30
-      ? `¡Excelente, ${state.student}! Tu puntaje final fue ${state.score}. Has comprendido muy bien los conceptos de neumática.`
-      : `¡Buen trabajo, ${state.student}! Tu puntaje final fue ${state.score}. Sigue explorando el simulador para reforzar los conceptos.`;
-
-  resultMessage.textContent = message;
+  resultsBox.classList.remove("hidden");
+  resultMessage.textContent = `¡Actividad terminada, ${state.student}! Lograste ${state.score} de ${missions.length * 10} puntos. Revisa las explicaciones de cada reto y sigue experimentando en el simulador.`;
   saveSession();
 }
 
 function validateLogin() {
   const student = studentNameInput.value.trim();
   const classCode = classCodeInput.value.trim().toUpperCase();
-  const grade = gradeSelect.value;
-
   if (!student) {
     alert("Escribe el nombre del estudiante.");
     return;
   }
-
   if (!VALID_CODES.includes(classCode)) {
-    alert("Código de clase no válido. Prueba: ITIP9A, ITIP9B o ITIP9C.");
+    alert("Código de clase no válido. Usa ITIP9A, ITIP9B o ITIP9C.");
     return;
   }
 
   state.student = student;
-  state.grade = grade;
+  state.grade = gradeSelect.value;
   state.classCode = classCode;
   state.score = 0;
   state.currentIndex = 0;
   state.finished = false;
-  resultsBox.classList.remove("visible");
-  studentLabel.textContent = `${state.student} · ${state.grade}° · ${state.classCode}`;
-  updateScore();
+  studentLabel.textContent = `${state.student} · 9° · ${state.classCode}`;
+  scoreValue.textContent = "0";
   saveSession();
-  renderQuestion();
   showScreen("game");
+  renderMission();
 }
 
 loginBtn.addEventListener("click", validateLogin);
+doneBtn.addEventListener("click", confirmExperiment);
+
+nextBtn.addEventListener("click", () => {
+  if (!state.answered) return;
+  if (state.currentIndex === missions.length - 1) {
+    showResults();
+    return;
+  }
+  state.currentIndex += 1;
+  saveSession();
+  renderMission();
+});
+
+restartBtn.addEventListener("click", () => {
+  state.score = 0;
+  state.currentIndex = 0;
+  state.finished = false;
+  scoreValue.textContent = "0";
+  saveSession();
+  renderMission();
+});
 
 logoutBtn.addEventListener("click", () => {
-  localStorage.removeItem("neumatica_itip_session");
+  localStorage.removeItem(SESSION_KEY);
   studentNameInput.value = "";
   classCodeInput.value = "";
   state.student = "";
@@ -226,37 +244,7 @@ logoutBtn.addEventListener("click", () => {
   state.score = 0;
   state.currentIndex = 0;
   state.finished = false;
-  resultsBox.classList.remove("visible");
-  updateScore();
   showScreen("login");
-});
-
-nextBtn.addEventListener("click", () => {
-  if (state.finished) {
-    finishActivity();
-    return;
-  }
-
-  if (state.currentIndex < questions.length - 1) {
-    state.currentIndex += 1;
-    renderQuestion();
-  } else {
-    finishActivity();
-  }
-});
-
-restartBtn.addEventListener("click", () => {
-  state.score = 0;
-  state.currentIndex = 0;
-  state.finished = false;
-  resultsBox.classList.remove("visible");
-  updateScore();
-  saveSession();
-  renderQuestion();
 });
 
 restoreSession();
-
-if (!state.student) {
-  showScreen("login");
-}
