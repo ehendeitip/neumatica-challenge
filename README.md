@@ -2,23 +2,25 @@
 
 Actividad práctica guiada para grado 9° del Colegio ITIP.
 
-## Contenido
-- Acceso de estudiante con código de clase: `ITIP9A`, `ITIP9B` o `ITIP9C`.
-- Cinco preguntas de observación sobre el simulador Picuino.
-- Dos retos de montaje de sistemas de control en lazo cerrado, con lista de criterios de autoevaluación.
-- Un reto para replicar un circuito a partir de un diagrama de referencia incluido en `images/circuito-referencia.svg`.
-- Puntaje automático de hasta 95 puntos; cada reto práctico concede puntaje parcial por los criterios marcados.
-- Panel docente (`DOCENTE9`), vista de resultados y exportación CSV.
+## Retos
+- Cinco preguntas de observación sobre Picuino.
+- Un montaje de control en lazo cerrado con realimentación visual del estudiante.
+- Comparación entre lazo abierto y lazo cerrado con operador.
+- Réplica de circuito a partir de una imagen de referencia.
+- Puntaje de hasta 95 puntos, con criterios de autoevaluación para los montajes.
+- Modo docente (`DOCENTE9`), resultados y exportación CSV.
+
+## Aclaración sobre el lazo cerrado
+El simulador utilizado no ofrece finales de carrera en esta actividad. Para que el reto se pueda realizar con los recursos disponibles, se plantea un lazo cerrado **con operador humano**: el estudiante observa la posición real del cilindro, la compara con la posición deseada y acciona la válvula para corregirla. En este modelo, la vista del estudiante funciona como sensor y el estudiante como controlador. No es un control automático con sensor electrónico.
 
 ## Uso
 1. Abre la actividad publicada en GitHub Pages.
-2. Ingresa nombre y código de clase.
-3. En los retos de montaje, construye y prueba el sistema en Picuino; después marca únicamente los criterios que verificaste.
-4. En el reto de réplica, sigue el diagrama de referencia, construye el circuito equivalente y pruébalo.
-5. En modo docente, los resultados se consultan en el mismo navegador desde el que se guardaron y se pueden exportar como CSV.
+2. Ingresa nombre y código de clase (`ITIP9A`, `ITIP9B` o `ITIP9C`).
+3. En los retos de montaje, arma y prueba el circuito en Picuino; marca solo los criterios que verificaste.
+4. Para resultados, entra en **Modo docente** con la clave `DOCENTE9`.
 
-## Cambiar por una imagen de referencia del docente
-El reto de réplica usa ahora un diagrama de ejemplo. Para utilizar una imagen particular, añade el archivo al repositorio (por ejemplo, `images/referencia-clase.png`) y cambia la propiedad `image` del reto de tipo `replica` en `app.js` por esa ruta. También se puede reemplazar el SVG incluido.
+## Diagrama de réplica
+El reto usa `images/circuito-referencia.svg`. Para asignar un circuito específico del docente, añade la imagen al repositorio y cambia la propiedad `image` del reto de tipo `replica` en `app.js` por la ruta del nuevo archivo.
 
 ## Límites
-La actividad no puede inspeccionar directamente las acciones de Picuino porque el simulador se carga desde otro dominio. Los retos de montaje se evalúan mediante una lista de verificación que marca el estudiante; no es una verificación automática del circuito. Los resultados se almacenan en `localStorage` del dispositivo y navegador actuales, no se sincronizan entre equipos.
+La página no puede detectar automáticamente lo que ocurre dentro del simulador externo. La autoevaluación de montaje no sustituye la revisión docente. Los resultados se guardan en `localStorage` del dispositivo y navegador actuales; no se sincronizan entre equipos.
