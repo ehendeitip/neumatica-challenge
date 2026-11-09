@@ -1,7 +1,8 @@
 const VALID_CODES = ["ITIP9A", "ITIP9B", "ITIP9C"];
 const SESSION_KEY = "neumatica_itip_grade9_v2";
+const RESULTS_KEY = "neumatica_itip_results_v2";
+const TEACHER_KEY = "DOCENTE9";
 
-// Cada reto pide observar una acción real en Picuino antes de responder.
 const missions = [
   {
     title: "Activa un mando y observa el actuador",
@@ -57,11 +58,23 @@ const state = {
 };
 
 const loginScreen = document.getElementById("loginScreen");
+const teacherScreen = document.getElementById("teacherScreen");
 const gameScreen = document.getElementById("gameScreen");
 const studentNameInput = document.getElementById("studentName");
 const classCodeInput = document.getElementById("classCode");
 const gradeSelect = document.getElementById("grade");
 const loginBtn = document.getElementById("loginBtn");
+const teacherBtn = document.getElementById("teacherBtn");
+const backToLoginBtn = document.getElementById("backToLoginBtn");
+const openTeacherResultsBtn = document.getElementById("openTeacherResultsBtn");
+const teacherCodeInput = document.getElementById("teacherCode");
+const teacherResultsPanel = document.getElementById("teacherResultsPanel");
+const totalStudents = document.getElementById("totalStudents");
+const averageScore = document.getElementById("averageScore");
+const maxScore = document.getElementById("maxScore");
+const resultsTableBody = document.getElementById("resultsTableBody");
+const exportCsvBtn = document.getElementById("exportCsvBtn");
+const clearResultsBtn = document.getElementById("clearResultsBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const doneBtn = document.getElementById("doneBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -78,8 +91,21 @@ const answerFeedback = document.getElementById("answerFeedback");
 const resultsBox = document.getElementById("resultsBox");
 const resultMessage = document.getElementById("resultMessage");
 
+function getResults() {
+  try {
+    return JSON.parse(localStorage.getItem(RESULTS_KEY) || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveResults(results) {
+  localStorage.setItem(RESULTS_KEY, JSON.stringify(results));
+}
+
 function showScreen(name) {
   loginScreen.classList.toggle("active", name === "login");
+  teacherScreen.classList.toggle("active", name === "teacher");
   gameScreen.classList.toggle("active", name === "game");
 }
 
@@ -184,6 +210,19 @@ function showResults() {
   state.finished = true;
   resultsBox.classList.remove("hidden");
   resultMessage.textContent = `¡Actividad terminada, ${state.student}! Lograste ${state.score} de ${missions.length * 10} puntos. Revisa las explicaciones de cada reto y sigue experimentando en el simulador.`;
+
+  const results = getResults();
+  const entry = {
+    student: state.student,
+    classCode: state.classCode,
+    score: state.score,
+    total: missions.length * 10,
+    date: new Date().toISOString()
+  };
+
+  const filtered = results.filter(item => !(item.student === entry.student && item.classCode === entry.classCode && item.date && item.score === entry.score && item.date.slice(0,10) === entry.date.slice(0,10)));
+  filtered.push(entry);
+  saveResults(filtered);
   saveSession();
 }
 
@@ -212,7 +251,87 @@ function validateLogin() {
   renderMission();
 }
 
+function renderTeacherResults() {
+  const results = getResults().sort((a, b) => new Date(b.date) - new Date(a.date));
+  const total = results.length;
+  const average = total ? Math.round(results.reduce((acc, item) => acc + Number(item.score || 0), 0) / total) : 0;
+  const max = total ? Math.max(...results.map(item => Number(item.score || 0))) : 0;
+
+  totalStudents.textContent = String(total);
+  averageScore.textContent = `${average}`;
+  maxScore.textContent = `${max}`;
+
+  resultsTableBody.innerHTML = results.length
+    ? results.map(item => `
+      <tr>
+        <td>${item.student}</td>
+        <td>${item.classCode}</td>
+        <td>${item.score}/${item.total}</td>
+        <td>${new Date(item.date).toLocaleString("es-CO", { dateStyle: "short", timeStyle: "short" })}</td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="4">Aún no hay resultados</td></tr>`;
+}
+
+function openTeacherPanel() {
+  const code = teacherCodeInput.value.trim();
+  if (code !== TEACHER_KEY) {
+    alert("Clave incorrecta.");
+    return;
+  }
+  teacherResultsPanel.classList.remove("hidden");
+  renderTeacherResults();
+}
+
+function exportCsv() {
+  const results = getResults();
+  if (!results.length) {
+    alert("No hay resultados para exportar.");
+    return;
+  }
+
+  const header = ["estudiante", "codigo", "puntaje", "total", "fecha"];
+  const rows = results.map(item => [
+    item.student,
+    item.classCode,
+    item.score,
+    item.total,
+    new Date(item.date).toISOString()
+  ]);
+
+  const csv = [header, ...rows]
+    .map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(","))
+    .join("\n");
+
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "resultados_neumatica.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function clearResults() {
+  if (!confirm("¿Seguro que quieres borrar todos los resultados?")) return;
+  saveResults([]);
+  renderTeacherResults();
+}
+
 loginBtn.addEventListener("click", validateLogin);
+teacherBtn.addEventListener("click", () => {
+  showScreen("teacher");
+  teacherCodeInput.value = "";
+  teacherResultsPanel.classList.add("hidden");
+});
+backToLoginBtn.addEventListener("click", () => {
+  showScreen("login");
+});
+openTeacherResultsBtn.addEventListener("click", openTeacherPanel);
+exportCsvBtn.addEventListener("click", exportCsv);
+clearResultsBtn.addEventListener("click", clearResults);
 doneBtn.addEventListener("click", confirmExperiment);
 
 nextBtn.addEventListener("click", () => {
@@ -230,6 +349,7 @@ restartBtn.addEventListener("click", () => {
   state.score = 0;
   state.currentIndex = 0;
   state.finished = false;
+  resultsBox.classList.add("hidden");
   scoreValue.textContent = "0";
   saveSession();
   renderMission();
@@ -248,3 +368,6 @@ logoutBtn.addEventListener("click", () => {
 });
 
 restoreSession();
+if (!state.student) {
+  showScreen("login");
+}

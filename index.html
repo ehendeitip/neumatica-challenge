@@ -29,8 +29,67 @@
             <label for="classCode">Código de clase</label>
             <input id="classCode" type="text" placeholder="Ej: ITIP9A" />
           </div>
+
           <button id="loginBtn" class="primary-btn">Ingresar a la actividad</button>
           <div class="note">Códigos de clase: <strong>ITIP9A</strong>, <strong>ITIP9B</strong> o <strong>ITIP9C</strong>.</div>
+
+          <button id="teacherBtn" class="secondary-btn teacher-btn">Modo docente</button>
+        </div>
+      </section>
+
+      <section id="teacherScreen" class="screen">
+        <div class="teacher-header">
+          <div>
+            <p class="eyebrow">Panel del docente</p>
+            <h2>Resultados de neumática</h2>
+          </div>
+          <button id="backToLoginBtn" class="secondary-btn">Volver</button>
+        </div>
+
+        <div class="teacher-card card">
+          <div class="teacher-lock">
+            <label for="teacherCode">Clave docente</label>
+            <div class="teacher-form">
+              <input id="teacherCode" type="password" placeholder="Ingrese clave" />
+              <button id="openTeacherResultsBtn" class="primary-btn">Entrar</button>
+            </div>
+          </div>
+
+          <div id="teacherResultsPanel" class="teacher-results hidden">
+            <div class="teacher-summary">
+              <div class="stat-box">
+                <span>Estudiantes</span>
+                <strong id="totalStudents">0</strong>
+              </div>
+              <div class="stat-box">
+                <span>Promedio</span>
+                <strong id="averageScore">0</strong>
+              </div>
+              <div class="stat-box">
+                <span>Máximo</span>
+                <strong id="maxScore">0</strong>
+              </div>
+            </div>
+
+            <div class="teacher-actions">
+              <button id="exportCsvBtn" class="primary-btn">Exportar CSV</button>
+              <button id="clearResultsBtn" class="danger-btn">Borrar resultados</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Estudiante</th>
+                    <th>Código</th>
+                    <th>Puntaje</th>
+                    <th>Fecha</th>
+                  </tr>
+                </thead>
+                <tbody id="resultsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </section>
 
