@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neumática ITIP | Grado 7°</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <section id="loginScreen" class="screen active">
+        <div class="card login-box">
+          <div class="brand">
+            <span class="badge">ITIP</span>
+            <h1>Laboratorio de Neumática</h1>
+          </div>
+
+          <p class="subtitle">Grado 7° · Colegio ITIP</p>
+
+          <div class="input-group">
+            <label for="studentName">Nombre del estudiante</label>
+            <input id="studentName" type="text" placeholder="Ej: Ana Gómez" />
+          </div>
+
+          <div class="input-group">
+            <label for="grade">Grado</label>
+            <select id="grade">
+              <option value="7">Séptimo</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="classCode">Código de clase</label>
+            <input id="classCode" type="text" placeholder="Ej: ITIP7A" />
+          </div>
+
+          <button id="loginBtn" class="primary-btn">Ingresar a la actividad</button>
+          <div class="note">
+            Códigos válidos de ejemplo: <strong>ITIP7A</strong>, <strong>ITIP7B</strong>, <strong>ITIP7C</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="screen">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Actividad interactiva</p>
+            <h2>Neumática aplicada</h2>
+          </div>
+          <div class="session-box" id="studentLabel">Estudiante</div>
+          <button id="logoutBtn" class="secondary-btn">Cerrar sesión</button>
+        </header>
+
+        <main class="layout">
+          <div class="card simulator-panel">
+            <div class="simulator-wrap">
+              <iframe
+                src="https://www.picuino.com/neumatic/index.html#"
+                title="Simulador de neumática Picuino"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+
+          <aside class="challenge-panel">
+            <div class="score-box">
+              <div>
+                <span class="label">Puntaje</span>
+                <div id="scoreValue" class="score-number">0</div>
+              </div>
+              <button id="nextBtn" class="warning-btn">Siguiente</button>
+            </div>
+
+            <div class="question-card" id="questionCard">
+              <h3 id="questionTitle">Pregunta 1</h3>
+              <p id="questionText"></p>
+              <div id="optionList" class="option-list"></div>
+            </div>
+
+            <div id="resultsBox" class="results-box">
+              <h3>Resultado final</h3>
+              <p id="resultMessage"></p>
+              <button id="restartBtn" class="primary-btn">Reiniciar actividad</button>
+            </div>
+          </aside>
+        </main>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
