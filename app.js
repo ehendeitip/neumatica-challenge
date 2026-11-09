@@ -50,6 +50,18 @@ const missions = [
     feedback: "Un diagnóstico inicial revisa alimentación y continuidad del recorrido del aire."
   },
   {
+    type: "choice",
+    title: "Lee las señales de una secuencia neumática",
+    points: 15,
+    action: "Estudia la gráfica de señales del sistema secuencial. A representa el cilindro A y B el cilindro B; nivel 1 significa extendido y nivel 0 retraído. Lee los cambios de izquierda a derecha y deduce el orden del ciclo.",
+    image: "images/secuencia-senales.svg",
+    caption: "Diagrama didáctico de posición de dos cilindros a lo largo del tiempo.",
+    question: "¿Qué secuencia de movimientos representa la gráfica?",
+    options: ["A+ → B+ → B− → A−", "B+ → A+ → A− → B−", "A+ y B+ simultáneamente → A− → B−", "A− → B− → A+ → B+"],
+    correct: 0,
+    feedback: "A+ ocurre primero; después B+; luego B− y finalmente A−. El signo + indica avance y el signo − indica retorno."
+  },
+  {
     type: "build",
     title: "Control en lazo cerrado con realimentación visual",
     points: 15,
@@ -291,7 +303,7 @@ function answerChoice(selectedIndex, mission) {
   if (state.answered) return;
   state.answered = true;
   const correct = selectedIndex === mission.correct;
-  if (correct) state.score += 10;
+  if (correct) state.score += mission.points || 10;
   scoreValue.textContent = String(state.score);
 
   optionList.querySelectorAll("button").forEach((button, index) => {
@@ -393,7 +405,7 @@ doneBtn.addEventListener("click", confirmExperiment);
 nextBtn.addEventListener("click", () => {
   if (!state.answered) return;
   if (state.currentIndex === missions.length - 1) { showResults(); return; }
-  state.currentIndex += 1;
+  state.currentIndex++;
   saveSession();
   renderMission();
 });

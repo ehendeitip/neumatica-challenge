@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" role="img" aria-labelledby="title desc">
+  <title id="title">Gráfica de señales de un sistema secuencial A+ B+ B- A-</title>
+  <desc id="desc">Gráfica temporal de posición de dos cilindros: A avanza primero, B avanza después, B retorna y finalmente A retorna.</desc>
+  <rect width="920" height="560" rx="24" fill="#f8fafc"/>
+  <text x="460" y="42" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#0f172a">Lectura de señales: secuencia de dos cilindros</text>
+  <text x="460" y="72" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#475569">Nivel 1 = extendido · Nivel 0 = retraído · Lee de izquierda a derecha</text>
+  <g stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 6">
+    <path d="M220 125 V430"/><path d="M350 125 V430"/><path d="M480 125 V430"/><path d="M610 125 V430"/><path d="M740 125 V430"/><path d="M870 125 V430"/>
+    <path d="M190 180 H870"/><path d="M190 250 H870"/><path d="M190 320 H870"/><path d="M190 390 H870"/>
+  </g>
+  <g stroke="#334155" stroke-width="2.5" fill="none"><path d="M190 125 V435 H875"/><path d="M875 435 l-10 -6 v12 z" fill="#334155"/></g>
+  <g font-family="Arial,sans-serif" font-size="17" fill="#334155"><text x="165" y="186" text-anchor="end">1</text><text x="165" y="256" text-anchor="end">0</text><text x="165" y="326" text-anchor="end">1</text><text x="165" y="396" text-anchor="end">0</text><text x="185" y="468">Tiempo (pasos)</text><text x="220" y="462" text-anchor="middle">0</text><text x="350" y="462" text-anchor="middle">1</text><text x="480" y="462" text-anchor="middle">2</text><text x="610" y="462" text-anchor="middle">3</text><text x="740" y="462" text-anchor="middle">4</text><text x="870" y="462" text-anchor="middle">5</text></g>
+  <g font-family="Arial,sans-serif" font-size="20" font-weight="700"><text x="90" y="222" fill="#2563eb">Cilindro A</text><text x="90" y="362" fill="#ea580c">Cilindro B</text></g>
+  <path d="M220 250 H350 V180 H740 V250 H870" fill="none" stroke="#2563eb" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M220 390 H480 V320 H610 V390 H870" fill="none" stroke="#ea580c" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+  <g fill="#2563eb"><circle cx="350" cy="180" r="7"/><circle cx="740" cy="250" r="7"/></g><g fill="#ea580c"><circle cx="480" cy="320" r="7"/><circle cx="610" cy="390" r="7"/></g>
+  <g font-family="Arial,sans-serif" font-size="16" font-weight="700"><text x="350" y="155" text-anchor="middle" fill="#1d4ed8">A+</text><text x="480" y="295" text-anchor="middle" fill="#c2410c">B+</text><text x="610" y="420" text-anchor="middle" fill="#c2410c">B−</text><text x="740" y="280" text-anchor="middle" fill="#1d4ed8">A−</text></g>
+  <text x="460" y="520" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#0f172a">Identifica el orden de los movimientos A y B siguiendo los cambios de nivel.</text>
+</svg>
